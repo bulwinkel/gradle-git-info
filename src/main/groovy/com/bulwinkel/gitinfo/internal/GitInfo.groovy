@@ -2,7 +2,7 @@ package com.bulwinkel.gitinfo.internal
 
 final class GitInfo {
 
-  @Lazy final int commitCount = {
+  @Lazy int commitCount = {
     def p = Runtime.getRuntime().exec("git rev-list --all --count")
 
     def result = p.waitFor()
@@ -12,7 +12,7 @@ final class GitInfo {
     return p.getInputStream().readLines().get(0).toInteger()
   }()
 
-  @Lazy final String latestTag = {
+  @Lazy String latestTag = {
     def p = Runtime.getRuntime().exec("git describe --tags")
 
     def result = p.waitFor()
