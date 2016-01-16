@@ -7,6 +7,6 @@ import org.gradle.api.Project
 class GitInfoPlugin implements Plugin<Project> {
 
   @Override void apply(Project project) {
-    project.ext.gitInfo = GitInfo()
+    project.ext.gitInfo = new GitInfo()
   }
 }
