@@ -1,0 +1,1 @@
+# Gradle Git Info
