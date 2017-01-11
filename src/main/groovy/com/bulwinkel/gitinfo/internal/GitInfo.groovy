@@ -3,25 +3,26 @@ package com.bulwinkel.gitinfo.internal
 final class GitInfo {
 
   @Lazy int commitCount = {
-    final String branch = '${1:-\'master\'}'
-    def p = Runtime.getRuntime().exec("expr \$(git rev-list $branch --count) - \$(git rev-list HEAD..$branch --count)")
-
-    def result = p.waitFor()
-    if (result != 0) {
-      return 0 // no git revisions
-    }
-    return p.getInputStream().readLines().get(0).toInteger()
+    final int revListMasterCount = evaluateExpressionToInt("git rev-list master --count")
+    final int revListHeadCount = evaluateExpressionToInt("git rev-list HEAD..master --count")
+    return revListMasterCount - revListHeadCount
   }()
 
   @Lazy String latestTag = {
-    def p = Runtime.getRuntime().exec("git describe --tags")
+    return evaluateExpression("git describe --tags").first().toString().trim()
+  }()
+
+  private static int evaluateExpressionToInt(final String expression) {
+    return evaluateExpression(expression).first().toInteger()
+  }
+
+  private static List<String> evaluateExpression(String expression) {
+    def p = Runtime.getRuntime().exec(expression)
 
     def result = p.waitFor()
     if (result != 0) {
-      println "WARNING: No git tags in current git project"
-      return "" // no git tag
+      return Collections.emptyList() // no git revisions
     }
-    return p.getInputStream().readLines().get(0).toString().trim()
-  }()
-
+    return p.getInputStream().readLines()
+  }
 }

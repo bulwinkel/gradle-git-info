@@ -18,7 +18,7 @@ class GitInfoPluginTest {
 
   @Test void gitInfoAvailableOnProject() {
     final GitInfo gitInfo = project.gitInfo
-    println("gitInfo = $gitInfo")
+    println("gitInfo.commitCount = $gitInfo.commitCount")
     assertThat(gitInfo).isInstanceOf(GitInfo)
     assertThat(gitInfo.commitCount).is { it > 0 }
     assertThat(gitInfo.latestTag).isNotNull()
