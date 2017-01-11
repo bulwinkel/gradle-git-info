@@ -3,7 +3,8 @@ package com.bulwinkel.gitinfo.internal
 final class GitInfo {
 
   @Lazy int commitCount = {
-    def p = Runtime.getRuntime().exec("git rev-list --all --count")
+    final String branch = '${1:-\'master\'}'
+    def p = Runtime.getRuntime().exec("expr \$(git rev-list $branch --count) - \$(git rev-list HEAD..$branch --count)")
 
     def result = p.waitFor()
     if (result != 0) {

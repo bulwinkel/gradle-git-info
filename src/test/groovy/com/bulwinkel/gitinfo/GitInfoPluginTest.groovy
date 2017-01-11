@@ -5,11 +5,11 @@ import org.gradle.api.Project
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.BeforeClass
 import org.junit.Test
-import static org.fest.assertions.api.Assertions.*;
+import static org.fest.assertions.api.Assertions.*
 
 class GitInfoPluginTest {
 
-  static Project project;
+  static Project project
 
   @BeforeClass static void setup() {
     project = ProjectBuilder.builder().build()
@@ -17,9 +17,11 @@ class GitInfoPluginTest {
   }
 
   @Test void gitInfoAvailableOnProject() {
-    assertThat(project.gitInfo).isInstanceOf(GitInfo)
-    assertThat(project.gitInfo.commitCount).is { it > 0 }
-    assertThat(project.gitInfo.latestTag).isNotNull()
+    final GitInfo gitInfo = project.gitInfo
+    println("gitInfo = $gitInfo")
+    assertThat(gitInfo).isInstanceOf(GitInfo)
+    assertThat(gitInfo.commitCount).is { it > 0 }
+    assertThat(gitInfo.latestTag).isNotNull()
   }
 
   @Test void describeTaskAvailableOnProject() {
