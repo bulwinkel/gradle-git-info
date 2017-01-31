@@ -17,7 +17,7 @@ final class GitInfo {
     }
   }()
 
-  private static int evaluateExpressionToInt(final String expression) {
+  static int evaluateExpressionToInt(final String expression) {
     final List<String> lines = evaluateExpression(expression)
     final String firstLine
     if (lines.size() > 0) {
@@ -32,7 +32,7 @@ final class GitInfo {
     }
   }
 
-  private static List<String> evaluateExpression(String expression) {
+  static List<String> evaluateExpression(String expression) {
     def p = Runtime.getRuntime().exec(expression)
 
     def result = p.waitFor()
