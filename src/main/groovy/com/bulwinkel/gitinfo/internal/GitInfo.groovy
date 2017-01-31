@@ -18,7 +18,18 @@ final class GitInfo {
   }()
 
   private static int evaluateExpressionToInt(final String expression) {
-    return evaluateExpression(expression).first().toInteger()
+    final List<String> lines = evaluateExpression(expression)
+    final String firstLine
+    if (lines.size() > 0) {
+      firstLine = lines.first()
+    } else {
+      firstLine = "0"
+    }
+    try {
+      return firstLine.toInteger()
+    } catch (Exception ignored) {
+      return 0
+    }
   }
 
   private static List<String> evaluateExpression(String expression) {
