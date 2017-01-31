@@ -9,11 +9,13 @@ class GitInfoPlugin implements Plugin<Project> {
   @Override void apply(Project project) {
     project.ext.gitInfo = new GitInfo()
 
-    project.task ("describeGit") << {
-      println "*** Git Info Plugin ***"
-      println "* Commit Count: \t${project.gitInfo.commitCount}"
-      println "* Latest Tag: \t${project.gitInfo.latestTag}"
-      println "***********************"
+    project.task ("describeGit") {
+      doLast {
+        println "*** Git Info Plugin ***"
+        println "* Commit Count: \t${project.gitInfo.commitCount}"
+        println "* Latest Tag: \t${project.gitInfo.latestTag}"
+        println "***********************"
+      }
     }
   }
 }

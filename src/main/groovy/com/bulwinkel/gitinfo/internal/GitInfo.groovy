@@ -9,7 +9,12 @@ final class GitInfo {
   }()
 
   @Lazy String latestTag = {
-    return evaluateExpression("git describe --tags").first().toString().trim()
+    final List<String> tags = evaluateExpression("git describe --tags")
+    if (tags.size() == 0) {
+      return "No Version Tag"
+    } else {
+      return tags.first().toString().trim()
+    }
   }()
 
   private static int evaluateExpressionToInt(final String expression) {
