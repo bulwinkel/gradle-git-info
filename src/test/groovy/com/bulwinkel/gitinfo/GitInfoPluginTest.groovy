@@ -16,12 +16,6 @@ class GitInfoPluginTest {
     project.pluginManager.apply 'com.bulwinkel.gradle-git-info'
   }
 
-  @Test void evaluateExpressionToIntShouldReturnZeroIfNothing() {
-    int lines = GitInfo.evaluateExpressionToInt("echo \'\'")
-    println("lines = $lines")
-    assertThat(lines).isEqualTo(0)
-  }
-
   @Test void gitInfoAvailableOnProject() {
     final GitInfo gitInfo = project.gitInfo
     println("gitInfo.commitCount = $gitInfo.commitCount")

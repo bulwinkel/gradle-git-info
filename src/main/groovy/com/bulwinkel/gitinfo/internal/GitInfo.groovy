@@ -2,43 +2,31 @@ package com.bulwinkel.gitinfo.internal
 
 final class GitInfo {
 
-  @Lazy int commitCount = {
-    final int revListMasterCount = evaluateExpressionToInt("git rev-list master --count")
-    final int revListHeadCount = evaluateExpressionToInt("git rev-list HEAD..master --count")
-    return revListMasterCount - revListHeadCount
-  }()
+  static final String versionExpression = 'git describe --tags'
+  static final String revListHeadCount = "git rev-list HEAD --count"
+  static final String revListHeadToMasterCount = "git rev-list HEAD..master --count"
 
-  @Lazy String latestTag = {
-    final List<String> tags = evaluateExpression("git describe --tags")
-    if (tags.size() == 0) {
-      return "No Version Tag"
-    } else {
-      return tags.first().toString().trim()
-    }
-  }()
+  final String latestTag = evaluateExpression(versionExpression)
+  final int commitCount = evaluateExpression(revListHeadCount).toInteger() - evaluateExpression(
+      revListHeadToMasterCount).toInteger()
 
-  static int evaluateExpressionToInt(final String expression) {
-    final List<String> lines = evaluateExpression(expression)
-    final String firstLine
-    if (lines.size() > 0) {
-      firstLine = lines.first()
-    } else {
-      firstLine = "0"
-    }
-    try {
-      return firstLine.toInteger()
-    } catch (Exception ignored) {
-      return 0
-    }
+  @Override
+  public String toString() {
+    return "GitInfo{" + "commitCount=" + commitCount + ", latestTag='" + latestTag + '\'' + '}';
   }
 
-  static List<String> evaluateExpression(String expression) {
+  static String evaluateExpression(String expression) {
     def p = Runtime.getRuntime().exec(expression)
 
     def result = p.waitFor()
     if (result != 0) {
-      return Collections.emptyList() // no git revisions
+      return "0"
     }
-    return p.getInputStream().readLines()
+    try {
+      final String first = p.getInputStream().readLines().first()
+      return first.isEmpty() ? "0" : first
+    } catch (Exception e) {
+      return "0"
+    }
   }
 }
