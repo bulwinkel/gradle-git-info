@@ -15,7 +15,7 @@ buildscript {
     maven { url "https://jitpack.io" }
   }
   dependencies {
-    classpath 'com.github.bulwinkel:gradle-git-info:1.0.1'
+    classpath 'com.github.bulwinkel:gradle-git-info:1.1.0'
   }
 }
 
