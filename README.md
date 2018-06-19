@@ -1,6 +1,8 @@
 Gradle Git Info
 ===============
-**IMPORTANT:** This plugin has been deprecated, in favor of github.com/bulwinkel/gradle-git-version
+**IMPORTANT: This plugin is deprecated** 
+
+Please migrate to: https://github.com/bulwinkel/gradle-git-version
 
 Plugin which exposes the commit count and latest tag to your gradle build for use as the build
 number and version code respectively.
