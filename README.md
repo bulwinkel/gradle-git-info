@@ -31,7 +31,7 @@ println "latestTag: ${project.gitInfo.latestTag}"
 
 Credits
 -------
-There is nothing original here, rather just the packaging of other (much smarter) peoples ideas 
+There is nothing original here, rather just the packaging of other peoples ideas 
 into an easy to apply plugin.
 
 - [Automatic Versioning With Git and Gradle](http://ryanharter.com/blog/2013/07/30/automatic-versioning-with-git-and-gradle/)
